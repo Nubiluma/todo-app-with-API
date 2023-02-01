@@ -1,0 +1,59 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --clr-palette16-steel-teal: #588b8b;
+  --clr-palette16-cedar-chest: #c8553d;
+  --clr-palette16-raisin-black: #272635;
+  --clr-palette16-white: #ffffff;
+
+  --clr-light-grey: #f9f9f9;
+}
+
+html {
+  font-size: 10px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-color: var(--clr-light-grey);
+}
+
+header {
+  margin: 0;
+  margin-bottom: 3rem;
+  padding-block: 1rem;
+  font-size: 2.5rem;
+  background-color: var(--clr-palette16-steel-teal);
+  color: black;
+}
+
+.input-form {
+  font-size: 1.5rem;
+}
+
+.todolist-heading {
+  font-size: 3rem;
+  margin: 0;
+  margin-top: 2rem;
+  padding: 2rem 1rem;
+}
+
+.todolist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-block: 1rem;
+}
+
+.todolist li {
+  font-size: 2rem;
+}
