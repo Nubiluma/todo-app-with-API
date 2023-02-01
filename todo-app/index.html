@@ -27,7 +27,18 @@
           <button class="add-button">Add</button>
         </form>
       </section>
-      <section class="filter-section"></section>
+      <section class="filter-section">
+        <h2 class="filter-heading">Filters and Options</h2>
+        <div class="filters">
+          <input type="radio" name="filter" id="filter-all" />
+          <label for="filter-all">All</label>
+          <input type="radio" name="filter" id="filter-open" />
+          <label for="filter-open">Open</label>
+          <input type="radio" name="filter" id="filter-done" />
+          <label for="filter-done">Done</label>
+        </div>
+        <button class="remove-button">Remove done todos</button>
+      </section>
       <section class="todolist-section">
         <h2 class="todolist-heading">My Todos</h2>
         <ul class="todolist"></ul>
