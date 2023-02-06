@@ -18,7 +18,10 @@ const state = {
   filter: FILTER_ALL,
 };
 
-/*****************************************************************************************************/
+loadTodos();
+
+/*******************************************************************/
+/******* event listener assignments *******/
 
 document.querySelector("form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -27,10 +30,12 @@ document.querySelector("form").addEventListener("submit", (event) => {
 addBtn.addEventListener("click", addTodo);
 removeTodosBtn.addEventListener("click", removeDoneTodos);
 
-loadTodos();
+/*******************************************************************/
+/******* CURD functions *******/
 
-/*****************************************************************************************************/
-
+/**
+ * load todos from database
+ */
 function loadTodos() {
   fetch("http://localhost:4730/todos")
     .then((response) => response.json())
@@ -40,6 +45,10 @@ function loadTodos() {
     });
 }
 
+/**
+ * add new todo to database
+ * input value is set to todo description
+ */
 function addTodo() {
   if (isInputValid(input.value)) {
     const newTodo = { description: input.value, done: false };
@@ -57,6 +66,10 @@ function addTodo() {
   }
 }
 
+/**
+ * remove single todo from database
+ * @param {number} id
+ */
 function removeTodo(id) {
   state.todos.splice(
     state.todos.findIndex((e) => e.id === id),
@@ -92,11 +105,38 @@ function toggleDoneStatus() {
     });
 }
 
-//WIP
+/*******************************************************************/
+/******* *******/
+
+/**
+ * remove all todos with done attribute === true
+ */
 function removeDoneTodos() {
   const doneTodos = state.todos.filter((todo) => todo.done);
-  console.log(doneTodos);
+  if (doneTodos.length > 0) {
+    doneTodos.forEach((todo) => removeTodo(todo.id));
+  }
 }
+
+/*******************************************************************/
+/******* utilities *******/
+
+/**
+ * check if user input is valid
+ * valid: string with at least 3 chars AND no duplicate description in todo list
+ * @param {string} inputValue
+ * @returns true or false
+ */
+function isInputValid(inputValue) {
+  const foundMatchingDescription = state.todos.find(
+    (e) => e.description.toLowerCase() === inputValue.toLowerCase()
+  );
+
+  return inputValue.length >= 3 && !foundMatchingDescription;
+}
+
+/*******************************************************************/
+/******* rendering *******/
 
 function render() {
   todoList.innerHTML = "";
@@ -120,12 +160,4 @@ function createTodoItemMarkup(todo) {
 
   listItem.append(checkbox, todoDescriptionLabel);
   todoList.appendChild(listItem);
-}
-
-function isInputValid(inputValue) {
-  const foundMatchingDescription = state.todos.find(
-    (e) => e.description.toLowerCase() === inputValue.toLowerCase()
-  );
-
-  return inputValue.length >= 3 && !foundMatchingDescription;
 }
