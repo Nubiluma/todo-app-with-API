@@ -91,19 +91,19 @@ function removeTodo(id) {
  * toggle done attribute
  * (identify todo by checking element id of clicked checkbox)
  */
-function toggleDoneStatus() {
-  const index = this.id;
-  const todo = state.todos[index - 1];
+function toggleDoneStatus(event) {
+  const id = event.target.value;
+  let todo = state.todos.find((e) => e.id == id);
   todo.done = !todo.done;
 
-  fetch(`http://localhost:4730/todos/${index}`, {
+  fetch(`http://localhost:4730/todos/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(todo),
   })
     .then((response) => response.json())
     .then((data) => {
-      state.todos[index - 1] = data;
+      todo = data;
       render();
     });
 }
@@ -184,7 +184,8 @@ function createTodoItemMarkup(todo) {
 
   const checkbox = document.createElement("input");
   checkbox.setAttribute("type", "checkbox");
-  checkbox.setAttribute("id", todo.id);
+  checkbox.setAttribute("value", todo.id);
+  checkbox.setAttribute("name", "todos");
   checkbox.checked = todo.done;
 
   checkbox.addEventListener("change", toggleDoneStatus);

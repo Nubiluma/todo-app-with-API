@@ -1,0 +1,4 @@
+{
+  "liveServer.settings.multiRootWorkspaceName": "todo-app-with-API",
+  "liveServer.settings.ignoreFiles": ["todo-api/db.json"]
+}
