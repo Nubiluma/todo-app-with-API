@@ -92,6 +92,19 @@ section {
   padding-block: 1rem;
 }
 
+.filters input {
+  all: unset;
+  background-color: var(--clr-light-grey);
+  width: 1rem;
+  height: 1rem;
+  outline: 0.25rem solid var(--clr-palette16-raisin-black);
+  border-radius: 100%;
+}
+
+.filters input:checked {
+  background-color: var(--clr-palette16-steel-teal);
+}
+
 .filter-list label {
   padding-inline: 0.5rem;
 }
@@ -114,7 +127,20 @@ section {
   padding: 0;
   margin: 0;
   margin-block: 1rem;
-  width: 25rem;
+  width: 30rem;
+}
+
+.todolist input {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.todolist input[type="checkbox"]:checked {
+  accent-color: var(--clr-palette16-steel-teal);
+}
+
+.todolist input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
 }
 
 .todolist li {
@@ -129,5 +155,5 @@ section {
 }
 
 .todolist label {
-  padding-inline: 0.75rem;
+  padding-inline: 1rem;
 }
