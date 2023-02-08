@@ -3,15 +3,16 @@ const addBtn = document.querySelector(".add-button");
 const removeTodosBtn = document.querySelector(".remove-button");
 const todoList = document.querySelector(".todolist");
 
-const filterElementAll = document.querySelector(".filter-all");
-const filterElementOpen = document.querySelector(".filter-open");
-const filterElementDone = document.querySelector(".filter-done");
+const filterElementAll = document.querySelector("#filter-all");
+const filterElementOpen = document.querySelector("#filter-open");
+const filterElementDone = document.querySelector("#filter-done");
 
-let FILTER_ALL = true;
-let FILTER_OPEN = false;
-let FILTER_DONE = false;
+let FILTER_ALL = "all";
+let FILTER_OPEN = "open";
+let FILTER_DONE = "done";
 
 const filterOptions = [filterElementAll, filterElementOpen, filterElementDone];
+filterElementAll.checked = true;
 
 const state = {
   todos: [],
@@ -29,6 +30,8 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
 addBtn.addEventListener("click", addTodo);
 removeTodosBtn.addEventListener("click", removeDoneTodos);
+
+filterOptions.forEach((e) => e.addEventListener("click", changeFilter));
 
 /*******************************************************************/
 /******* CURD functions *******/
@@ -106,7 +109,22 @@ function toggleDoneStatus() {
 }
 
 /*******************************************************************/
-/******* *******/
+/******* other event listener functions *******/
+
+/**
+ * change current filter in state to the one being clicked
+ */
+function changeFilter() {
+  if (this === filterElementOpen) {
+    state.filter = FILTER_OPEN;
+  } else if (this === filterElementDone) {
+    state.filter = FILTER_DONE;
+  } else {
+    state.filter = FILTER_ALL;
+  }
+
+  render();
+}
 
 /**
  * remove all todos with done attribute === true
@@ -120,6 +138,22 @@ function removeDoneTodos() {
 
 /*******************************************************************/
 /******* utilities *******/
+
+/**
+ * filter todos by done value
+ * @returns array of filtered todos
+ */
+function filterTodos() {
+  if (state.filter === FILTER_DONE) {
+    const doneTodos = state.todos.filter((todo) => todo.done === true);
+    return doneTodos;
+  }
+  if (state.filter === FILTER_OPEN) {
+    const openTodos = state.todos.filter((todo) => todo.done === false);
+    return openTodos;
+  }
+  return state.todos;
+}
 
 /**
  * check if user input is valid
@@ -140,7 +174,9 @@ function isInputValid(inputValue) {
 
 function render() {
   todoList.innerHTML = "";
-  state.todos.forEach((todo) => createTodoItemMarkup(todo));
+  const filteredTodos = filterTodos();
+
+  filteredTodos.forEach((todo) => createTodoItemMarkup(todo));
 }
 
 function createTodoItemMarkup(todo) {
